@@ -46,12 +46,15 @@ import { TEXT_SIZES, useTextSize } from "@/lib/text-size";
 
 const nav = [
   { to: "/", label: "Ringkasan", icon: LayoutDashboard },
-  { to: "/kamar", label: "Kamar", icon: DoorClosed },
   { to: "/denah", label: "Denah", icon: Map },
-  { to: "/fasilitas", label: "Fasilitas Utama", icon: Wrench },
   { to: "/tenant", label: "Tenant & Pembayaran", icon: Users },
   { to: "/kelola", label: "Kelola Data", icon: Settings },
   { to: "/laporan", label: "Laporan", icon: FileBarChart },
+] as const;
+
+const inventory = [
+  { to: "/kamar", label: "Inventaris Kamar", icon: DoorClosed },
+  { to: "/fasilitas", label: "Inventaris Fasilitas Utama", icon: Wrench },
 ] as const;
 
 const accounting = [
