@@ -1,4 +1,4 @@
-import { createFileRoute } from "@tanstack/react-router";
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useMemo, useState } from "react";
 import { AlertTriangle, FileDown, History, Pencil, Search, Trash2, UserPlus } from "lucide-react";
@@ -42,7 +42,7 @@ import {
 } from "@/lib/tenants";
 
 
-export const Route = createFileRoute("/tenant")({
+export const Route = createFileRoute("/tenant/")({
   head: () => ({
     meta: [
       { title: "Tenant & Pembayaran — Kost Lavin Purwokerto" },
@@ -316,6 +316,13 @@ function TenantPage() {
                   </div>
                 </button>
                 <div className="mt-3 flex gap-2">
+                  <Link
+                    to="/tenant/$id"
+                    params={{ id: tenant.id }}
+                    className="inline-flex h-8 items-center rounded-md border px-3 text-xs font-medium hover:bg-accent"
+                  >
+                    Detail lengkap
+                  </Link>
                   <Button size="sm" variant="outline" onClick={() => setPaymentFor(tenant)}>
                     Bayar
                   </Button>
