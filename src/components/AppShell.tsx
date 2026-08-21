@@ -164,7 +164,7 @@ export function AppShell({
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
                   <DropdownMenuItem asChild>
-                    <Link to="/kamar" search={{ lantai: undefined }} className="flex items-center gap-2">
+                    <Link to="/kamar" search={{ lantai: 1 }} className="flex items-center gap-2">
                       <DoorClosed className="h-4 w-4" /> Inventaris Kamar
                     </Link>
                   </DropdownMenuItem>
@@ -255,7 +255,7 @@ export function AppShell({
                     <CollapsibleContent className="pl-4">
                       <Link
                         to="/kamar"
-                        search={{ lantai: undefined }}
+                        search={{ lantai: 1 }}
                         onClick={() => setOpen(false)}
                         className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
                       >
