@@ -682,6 +682,7 @@ export function TenantFullFormDialog({
                 hint="Terisi otomatis dari gambar KTP atau kartu identitas yang diunggah, bisa diganti manual."
                 paths={form.photo_path ? [form.photo_path] : []}
                 onChange={(next) => set("photo_path", next[0] ?? "")}
+                deleteOnRemove={false}
               />
               <ProofUploader
                 folder="tenants"
