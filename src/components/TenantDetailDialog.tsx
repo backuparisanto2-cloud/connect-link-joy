@@ -65,14 +65,12 @@ function FileGroup({ label, paths }: { label: string; paths: string[] }) {
         <div className="flex flex-wrap gap-2">
           {paths.map((path) =>
             path.toLowerCase().endsWith(".pdf") ? (
-              <a
+              <span
                 key={path}
-                href="#"
-                onClick={(e) => e.preventDefault()}
                 className="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs"
               >
                 <FileText className="h-3 w-3" /> PDF
-              </a>
+              </span>
             ) : (
               <SignedImage
                 key={path}
