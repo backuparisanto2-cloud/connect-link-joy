@@ -167,13 +167,16 @@ export function AppShell({
                   Barang Inventaris <ChevronDown className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  {inventory.map((item) => (
-                    <DropdownMenuItem key={item.to} asChild>
-                      <Link to={item.to} search={{}} className="flex items-center gap-2">
-                        <item.icon className="h-4 w-4" /> {item.label}
-                      </Link>
-                    </DropdownMenuItem>
-                  ))}
+                  <DropdownMenuItem asChild>
+                    <Link to="/kamar" search={{}} className="flex items-center gap-2">
+                      <DoorClosed className="h-4 w-4" /> Inventaris Kamar
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/fasilitas" search={{}} className="flex items-center gap-2">
+                      <Wrench className="h-4 w-4" /> Inventaris Fasilitas Utama
+                    </Link>
+                  </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
               <DropdownMenu>
