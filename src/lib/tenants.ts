@@ -103,6 +103,9 @@ export type TenantProfile = {
   maps_home_url: string | null;
   maps_school_url: string | null;
   documents: string[];
+  ktp_files: string[];
+  id_card_files: string[];
+  photo_path: string | null;
   rules_agreed: boolean;
   rules_agreed_at: string | null;
   room_id: string | null;
@@ -131,6 +134,9 @@ export type TenantProfilePayload = {
   maps_home_url: string | null;
   maps_school_url: string | null;
   documents: string[];
+  ktp_files: string[];
+  id_card_files: string[];
+  photo_path: string | null;
   rules_agreed: boolean;
   room_id: string | null;
   room_number: string | null;
@@ -148,7 +154,7 @@ function strings(value: unknown): string[] {
 
 const SELECT = `
   id, name, nik, student_card, home_address, current_address, email, school_work_address,
-  maps_home_url, maps_school_url, documents, rules_agreed, rules_agreed_at, room_id,
+  maps_home_url, maps_school_url, documents, ktp_files, id_card_files, photo_path, rules_agreed, rules_agreed_at, room_id,
   room_number, check_in_date, rent_period, due_date, status, contact, notes,
   tenant_phones ( id, phone, label, is_primary ),
   tenant_emergency_contacts ( id, name, relationship, phone, notes ),
@@ -179,6 +185,9 @@ export const tenantProfilesQuery = {
     return (data ?? []).map((row: Record<string, unknown>) => ({
       ...(row as unknown as TenantProfile),
       documents: strings(row['documents']),
+      ktp_files: strings(row['ktp_files']),
+      id_card_files: strings(row['id_card_files']),
+      photo_path: (row['photo_path'] as string | null) ?? null,
       rules_agreed: Boolean(row['rules_agreed']),
       phones: ((row['tenant_phones'] ?? []) as TenantPhone[]).slice().sort((a, b) =>
         Number(b.is_primary) - Number(a.is_primary),
