@@ -16,6 +16,8 @@ import {
   Type,
   Calculator,
   ChevronDown,
+  ScrollText,
+  ExternalLink,
 } from "lucide-react";
 import { useState, type ReactNode } from "react";
 
@@ -58,6 +60,27 @@ const accounting = [
   { to: "/jurnal", label: "Jurnal Umum", icon: BookOpen },
 ] as const;
 
+const SOP_BASE = "https://lavin-rules-simplified.lovable.app/";
+
+const sopSections = [
+  { hash: "", label: "Buka Semua SOP" },
+  { hash: "penerimaan", label: "1. Penerimaan Tenant" },
+  { hash: "internet", label: "2. Penggunaan Internet (Wi-Fi)" },
+  { hash: "penyimpanan", label: "3. Penyimpanan Barang & Kendaraan" },
+  { hash: "fasilitas", label: "4. Fasilitas Bersama" },
+  { hash: "air-listrik", label: "5. Penggunaan Air & Listrik" },
+  { hash: "komplain", label: "6. Komplain Fasilitas" },
+  { hash: "paket", label: "7. Penerimaan Barang & Paket" },
+  { hash: "darurat", label: "8. Keadaan Darurat" },
+  { hash: "apar", label: "9. Penggunaan APAR" },
+  { hash: "kunjungan", label: "10. Kunjungan Tamu" },
+  { hash: "ketertiban", label: "11. Ketertiban & Ketenangan" },
+  { hash: "ketentuan", label: "12. Ketentuan Umum" },
+  { hash: "pernyataan", label: "Pernyataan Kepatuhan" },
+  { hash: "pendaftaran", label: "Pendaftaran Calon Penghuni" },
+] as const;
+
+const sopUrl = (hash: string) => (hash ? `${SOP_BASE}#${hash}` : SOP_BASE);
 
 function TextSizeControl({ compact = false }: { compact?: boolean }) {
   const { size, setSize } = useTextSize();
@@ -149,6 +172,26 @@ export function AppShell({
                   ))}
                 </DropdownMenuContent>
               </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  SOP <ChevronDown className="h-3.5 w-3.5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="max-h-[70vh] w-72 overflow-y-auto">
+                  {sopSections.map((item) => (
+                    <DropdownMenuItem key={item.label} asChild>
+                      <a
+                        href={sopUrl(item.hash)}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="flex items-center gap-2"
+                      >
+                        <ExternalLink className="h-3.5 w-3.5 shrink-0" />
+                        <span className="truncate">{item.label}</span>
+                      </a>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
             </nav>
             <div className="hidden md:block">
               <TextSizeControl compact />
@@ -203,6 +246,28 @@ export function AppShell({
                           <item.icon className="h-4 w-4 shrink-0" />
                           <span className="truncate">{item.label}</span>
                         </Link>
+                      ))}
+                    </CollapsibleContent>
+                  </Collapsible>
+                  <Collapsible defaultOpen={false} className="mt-1">
+                    <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent [&[data-state=open]>svg:last-child]:rotate-180">
+                      <ScrollText className="h-4 w-4 shrink-0" />
+                      <span className="flex-1 text-left">SOP</span>
+                      <ChevronDown className="h-4 w-4 shrink-0 transition-transform" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="pl-4">
+                      {sopSections.map((item) => (
+                        <a
+                          key={item.label}
+                          href={sopUrl(item.hash)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent"
+                        >
+                          <ExternalLink className="h-4 w-4 shrink-0" />
+                          <span className="truncate">{item.label}</span>
+                        </a>
                       ))}
                     </CollapsibleContent>
                   </Collapsible>
