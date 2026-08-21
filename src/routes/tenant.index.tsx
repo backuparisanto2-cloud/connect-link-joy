@@ -42,7 +42,7 @@ import {
 } from "@/lib/tenants";
 
 
-export const Route = createFileRoute("/tenant")({
+export const Route = createFileRoute("/tenant/")({
   head: () => ({
     meta: [
       { title: "Tenant & Pembayaran — Kost Lavin Purwokerto" },
