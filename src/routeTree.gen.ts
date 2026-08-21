@@ -78,9 +78,9 @@ const TenantIndexRoute = TenantIndexRouteImport.update({
   getParentRoute: () => rootRouteImport,
 } as any)
 const TenantIdRoute = TenantIdRouteImport.update({
-  id: '/tenant/$id',
-  path: '/tenant/$id',
-  getParentRoute: () => rootRouteImport,
+  id: '/$id',
+  path: '/$id',
+  getParentRoute: () => TenantRoute,
 } as any)
 
 export interface FileRoutesByFullPath {
@@ -181,7 +181,6 @@ export interface RootRouteChildren {
   PendapatanRoute: typeof PendapatanRoute
   PengeluaranRoute: typeof PengeluaranRoute
   KamarNomorRoute: typeof KamarNomorRoute
-  TenantIdRoute: typeof TenantIdRoute
   KamarIndexRoute: typeof KamarIndexRoute
   TenantIndexRoute: typeof TenantIndexRoute
 }
@@ -267,10 +266,10 @@ declare module '@tanstack/react-router' {
     }
     '/tenant/$id': {
       id: '/tenant/$id'
-      path: '/tenant/$id'
+      path: '/$id'
       fullPath: '/tenant/$id'
       preLoaderRoute: typeof TenantIdRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof TenantRoute
     }
   }
 }
@@ -285,7 +284,6 @@ const rootRouteChildren: RootRouteChildren = {
   PendapatanRoute: PendapatanRoute,
   PengeluaranRoute: PengeluaranRoute,
   KamarNomorRoute: KamarNomorRoute,
-  TenantIdRoute: TenantIdRoute,
   KamarIndexRoute: KamarIndexRoute,
   TenantIndexRoute: TenantIndexRoute,
 }
