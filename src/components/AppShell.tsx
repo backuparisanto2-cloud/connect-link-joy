@@ -169,7 +169,7 @@ export function AppShell({
                 <DropdownMenuContent align="end">
                   {inventory.map((item) => (
                     <DropdownMenuItem key={item.to} asChild>
-                      <Link to={item.to} className="flex items-center gap-2">
+                      <Link to={item.to} search={{}} className="flex items-center gap-2">
                         <item.icon className="h-4 w-4" /> {item.label}
                       </Link>
                     </DropdownMenuItem>
