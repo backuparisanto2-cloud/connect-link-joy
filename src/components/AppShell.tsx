@@ -226,8 +226,8 @@ export function AppShell({
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[17rem] p-0">
-                <SheetHeader className="border-b border-gold-line px-5 py-4 text-left">
+              <SheetContent side="right" className="flex h-full w-[17rem] flex-col p-0">
+                <SheetHeader className="shrink-0 border-b border-gold-line px-5 py-4 text-left">
                   <SheetTitle className="font-display text-lg">Menu</SheetTitle>
                   <SheetDescription className="text-xs">
                     Inventaris Lavin Kost Purwokerto
