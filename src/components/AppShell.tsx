@@ -257,18 +257,24 @@ export function AppShell({
                       <ChevronDown className="h-4 w-4 shrink-0 transition-transform" />
                     </CollapsibleTrigger>
                     <CollapsibleContent className="pl-4">
-                      {inventory.map((item) => (
-                        <Link
-                          key={item.to}
-                          to={item.to}
-                          search={{}}
-                          onClick={() => setOpen(false)}
-                          className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
-                        >
-                          <item.icon className="h-4 w-4 shrink-0" />
-                          <span className="truncate">{item.label}</span>
-                        </Link>
-                      ))}
+                      <Link
+                        to="/kamar"
+                        search={{}}
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
+                      >
+                        <DoorClosed className="h-4 w-4 shrink-0" />
+                        <span className="truncate">Inventaris Kamar</span>
+                      </Link>
+                      <Link
+                        to="/fasilitas"
+                        search={{}}
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
+                      >
+                        <Wrench className="h-4 w-4 shrink-0" />
+                        <span className="truncate">Inventaris Fasilitas Utama</span>
+                      </Link>
                     </CollapsibleContent>
                   </Collapsible>
                   <Collapsible defaultOpen={false} className="mt-1">
