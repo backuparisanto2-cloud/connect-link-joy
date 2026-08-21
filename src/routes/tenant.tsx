@@ -316,6 +316,13 @@ function TenantPage() {
                   </div>
                 </button>
                 <div className="mt-3 flex gap-2">
+                  <Link
+                    to="/tenant/$id"
+                    params={{ id: tenant.id }}
+                    className="inline-flex h-8 items-center rounded-md border px-3 text-xs font-medium hover:bg-accent"
+                  >
+                    Detail lengkap
+                  </Link>
                   <Button size="sm" variant="outline" onClick={() => setPaymentFor(tenant)}>
                     Bayar
                   </Button>
