@@ -12,12 +12,14 @@ export function PhotoUploader({
   folder,
   paths,
   onChange,
+  deleteOnRemove = true,
 }: {
   label: string;
   hint?: string;
   folder: string;
   paths: string[];
   onChange: (next: string[]) => void;
+  deleteOnRemove?: boolean;
 }) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [busy, setBusy] = useState(false);
@@ -94,7 +96,7 @@ export function PhotoUploader({
                 className="absolute -top-2 -right-2 rounded-full border border-gold-line bg-card p-1 text-destructive shadow-sm"
                 onClick={async () => {
                   onChange(paths.filter((p) => p !== path));
-                  await removePhoto(path);
+                  if (deleteOnRemove) await removePhoto(path);
                 }}
               >
                 <X className="h-3.5 w-3.5" />

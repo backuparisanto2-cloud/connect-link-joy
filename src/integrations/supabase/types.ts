@@ -579,11 +579,14 @@ export type Database = {
           email: string | null
           home_address: string | null
           id: string
+          id_card_files: Json
+          ktp_files: Json
           maps_home_url: string | null
           maps_school_url: string | null
           name: string
           nik: string | null
           notes: string | null
+          photo_path: string | null
           rent_period: string | null
           room_id: string | null
           room_number: string | null
@@ -604,11 +607,14 @@ export type Database = {
           email?: string | null
           home_address?: string | null
           id?: string
+          id_card_files?: Json
+          ktp_files?: Json
           maps_home_url?: string | null
           maps_school_url?: string | null
           name: string
           nik?: string | null
           notes?: string | null
+          photo_path?: string | null
           rent_period?: string | null
           room_id?: string | null
           room_number?: string | null
@@ -629,11 +635,14 @@ export type Database = {
           email?: string | null
           home_address?: string | null
           id?: string
+          id_card_files?: Json
+          ktp_files?: Json
           maps_home_url?: string | null
           maps_school_url?: string | null
           name?: string
           nik?: string | null
           notes?: string | null
+          photo_path?: string | null
           rent_period?: string | null
           room_id?: string | null
           room_number?: string | null

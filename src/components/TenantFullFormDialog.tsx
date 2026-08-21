@@ -3,6 +3,7 @@ import { Plus, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 
 import { ProofUploader } from "@/components/ProofUploader";
+import { PhotoUploader } from "@/components/PhotoUploader";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -49,6 +50,9 @@ export type TenantFormState = {
   maps_home_url: string;
   maps_school_url: string;
   documents: string[];
+  ktp_files: string[];
+  id_card_files: string[];
+  photo_path: string;
   rules_agreed: boolean;
   room_id: string;
   check_in_date: string;
@@ -71,6 +75,9 @@ export const tenantFormInitial: TenantFormState = {
   maps_home_url: "",
   maps_school_url: "",
   documents: [],
+  ktp_files: [],
+  id_card_files: [],
+  photo_path: "",
   rules_agreed: false,
   room_id: "",
   check_in_date: today(),
@@ -92,6 +99,9 @@ export function toFormState(tenant: TenantProfile): TenantFormState {
     maps_home_url: tenant.maps_home_url ?? "",
     maps_school_url: tenant.maps_school_url ?? "",
     documents: tenant.documents,
+    ktp_files: tenant.ktp_files,
+    id_card_files: tenant.id_card_files,
+    photo_path: tenant.photo_path ?? "",
     rules_agreed: tenant.rules_agreed,
     room_id: tenant.room_id ?? "",
     check_in_date: tenant.check_in_date ?? today(),
@@ -190,6 +200,18 @@ export function TenantFullFormDialog({
     setForm((prev) => ({ ...prev, [key]: value }));
   }
 
+  function handleIdUpload(key: "ktp_files" | "id_card_files", next: string[]) {
+    setForm((prev) => {
+      const added = next.filter((path) => !prev[key].includes(path));
+      const firstImage = added.find((path) => /\.(jpe?g|png|webp|heic|heif)$/i.test(path));
+      return {
+        ...prev,
+        [key]: next,
+        photo_path: prev.photo_path || firstImage || "",
+      };
+    });
+  }
+
   function syncDue(checkIn: string, period: string) {
     setForm((prev) => ({
       ...prev,
@@ -234,6 +256,9 @@ export function TenantFullFormDialog({
         maps_home_url: form.maps_home_url.trim() || null,
         maps_school_url: form.maps_school_url.trim() || null,
         documents: form.documents,
+        ktp_files: form.ktp_files,
+        id_card_files: form.id_card_files,
+        photo_path: form.photo_path || null,
         rules_agreed: form.rules_agreed,
         room_id: form.room_id || null,
         room_number: room?.number ?? null,
@@ -636,13 +661,37 @@ export function TenantFullFormDialog({
           </Section>
 
           <Section title="Dokumen">
-            <ProofUploader
-              folder="tenants"
-              paths={form.documents}
-              onChange={(next) => set("documents", next)}
-              label="Dokumen identitas / kontrak"
-              hint="KTP, kartu pelajar, surat perjanjian. JPG, PNG, WEBP, HEIC, atau PDF."
-            />
+            <div className="grid gap-5">
+              <ProofUploader
+                folder="tenants/ktp"
+                paths={form.ktp_files}
+                onChange={(next) => handleIdUpload("ktp_files", next)}
+                label="KTP"
+                hint="Foto atau scan KTP. JPG, PNG, WEBP, HEIC, atau PDF."
+              />
+              <ProofUploader
+                folder="tenants/kartu-identitas"
+                paths={form.id_card_files}
+                onChange={(next) => handleIdUpload("id_card_files", next)}
+                label="Kartu Mahasiswa / Pelajar / SIM"
+                hint="Salah satu kartu identitas pendukung. JPG, PNG, WEBP, HEIC, atau PDF."
+              />
+              <PhotoUploader
+                folder="tenants/foto"
+                label="Foto Tenant"
+                hint="Terisi otomatis dari gambar KTP atau kartu identitas yang diunggah, bisa diganti manual."
+                paths={form.photo_path ? [form.photo_path] : []}
+                onChange={(next) => set("photo_path", next[0] ?? "")}
+                deleteOnRemove={false}
+              />
+              <ProofUploader
+                folder="tenants"
+                paths={form.documents}
+                onChange={(next) => set("documents", next)}
+                label="Dokumen lain"
+                hint="Surat perjanjian, kontrak, atau dokumen pendukung lainnya."
+              />
+            </div>
           </Section>
         </div>
 

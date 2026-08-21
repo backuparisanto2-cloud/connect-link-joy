@@ -15,6 +15,7 @@ import {
 import { expensesQuery } from "@/lib/expenses";
 import { incomesQuery, otherIncomesQuery } from "@/lib/income";
 import { buildJournal, journalTotals } from "@/lib/journal";
+import { tenantProfilesQuery } from "@/lib/tenants";
 
 
 
@@ -73,6 +74,7 @@ function Dashboard() {
   const incomes = useQuery(incomesQuery);
   const otherIncomes = useQuery(otherIncomesQuery);
   const expenses = useQuery(expensesQuery);
+  const tenants = useQuery(tenantProfilesQuery);
 
   const jurnal = journalTotals(
     buildJournal(incomes.data ?? [], otherIncomes.data ?? [], expenses.data ?? []),
@@ -107,6 +109,25 @@ function Dashboard() {
   const kamarBermasalah = (rooms.data ?? [])
     .filter((r) => rusakPerKamar.has(r.id))
     .slice(0, 8);
+
+  const occupiedRoomIds = new Set(
+    (tenants.data ?? [])
+      .filter((t) => t.status === "Aktif" && t.room_id)
+      .map((t) => t.room_id as string),
+  );
+  const occupiedRoomNumbers = new Set(
+    (tenants.data ?? [])
+      .filter((t) => t.status === "Aktif" && t.room_number)
+      .map((t) => t.room_number as string),
+  );
+  const isOccupied = (room: { id: string; number: string }) =>
+    occupiedRoomIds.has(room.id) || occupiedRoomNumbers.has(room.number);
+  const floors = [...new Set((rooms.data ?? []).map((r) => r.floor))].sort((a, b) => a - b);
+  const kosongPerLantai = floors.map((floor) => {
+    const list = (rooms.data ?? []).filter((r) => r.floor === floor);
+    return { floor, total: list.length, kosong: list.filter((r) => !isOccupied(r)).length };
+  });
+  const totalKosong = kosongPerLantai.reduce((a, f) => a + f.kosong, 0);
 
   return (
     <AppShell
@@ -163,6 +184,39 @@ function Dashboard() {
               );
             })}
           </ul>
+        )}
+      </div>
+
+      <div className="gold-card mt-4 rounded-xl p-5">
+        <div className="flex flex-wrap items-center justify-between gap-2">
+          <h2 className="font-display text-xl font-semibold">Kamar Belum Terisi</h2>
+          <span className="text-sm text-muted-foreground">
+            Total {totalKosong} kamar kosong dari {(rooms.data ?? []).length} kamar
+          </span>
+        </div>
+        {kosongPerLantai.length === 0 ? (
+          <p className="mt-4 text-sm text-muted-foreground">Belum ada data kamar.</p>
+        ) : (
+          <div className="mt-4 grid gap-3 sm:grid-cols-3">
+            {kosongPerLantai.map((f) => (
+              <Link
+                key={f.floor}
+                to="/kamar"
+                search={{ lantai: f.floor }}
+                className="rounded-lg border border-gold-line px-4 py-3 transition-colors hover:bg-accent"
+              >
+                <p className="text-[11px] tracking-[0.14em] text-muted-foreground uppercase">
+                  Lantai {f.floor}
+                </p>
+                <p className="mt-1 font-display text-2xl font-semibold">
+                  {f.kosong}
+                  <span className="ml-1 text-sm font-normal text-muted-foreground">
+                    / {f.total} kamar
+                  </span>
+                </p>
+              </Link>
+            ))}
+          </div>
         )}
       </div>
 
