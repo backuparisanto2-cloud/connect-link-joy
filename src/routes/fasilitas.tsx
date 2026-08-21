@@ -150,7 +150,7 @@ function SharedFacilities() {
 
   return (
     <AppShell
-      title="Fasilitas Utama Kost"
+      title="Inventaris Fasilitas Utama"
       subtitle="Fasilitas yang dipakai bersama seluruh penghuni kost."
     >
       <div className="sticky top-0 z-10 -mx-4 bg-background/95 px-4 py-3 backdrop-blur sm:static sm:mx-0 sm:bg-transparent sm:px-0 sm:backdrop-blur-none">

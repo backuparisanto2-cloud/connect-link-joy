@@ -3,6 +3,7 @@ import {
   BookOpen,
   LayoutDashboard,
   DoorClosed,
+  Boxes,
   Wrench,
   FileBarChart,
   Wallet,
@@ -46,13 +47,12 @@ import { TEXT_SIZES, useTextSize } from "@/lib/text-size";
 
 const nav = [
   { to: "/", label: "Ringkasan", icon: LayoutDashboard },
-  { to: "/kamar", label: "Kamar", icon: DoorClosed },
   { to: "/denah", label: "Denah", icon: Map },
-  { to: "/fasilitas", label: "Fasilitas Utama", icon: Wrench },
   { to: "/tenant", label: "Tenant & Pembayaran", icon: Users },
   { to: "/kelola", label: "Kelola Data", icon: Settings },
   { to: "/laporan", label: "Laporan", icon: FileBarChart },
 ] as const;
+
 
 const accounting = [
   { to: "/pendapatan", label: "Pendapatan", icon: Coins },
@@ -160,6 +160,23 @@ export function AppShell({
               ))}
               <DropdownMenu>
                 <DropdownMenuTrigger className="flex items-center gap-1 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
+                  Barang Inventaris <ChevronDown className="h-3.5 w-3.5" />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end">
+                  <DropdownMenuItem asChild>
+                    <Link to="/kamar" search={{ lantai: 1 }} className="flex items-center gap-2">
+                      <DoorClosed className="h-4 w-4" /> Inventaris Kamar
+                    </Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem asChild>
+                    <Link to="/fasilitas" search={{ q: undefined }} className="flex items-center gap-2">
+                      <Wrench className="h-4 w-4" /> Inventaris Fasilitas Utama
+                    </Link>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 rounded-md px-3 py-2 text-sm text-muted-foreground transition-colors hover:text-foreground">
                   Akuntansi <ChevronDown className="h-3.5 w-3.5" />
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
@@ -209,14 +226,14 @@ export function AppShell({
                   <Menu className="h-5 w-5" />
                 </Button>
               </SheetTrigger>
-              <SheetContent side="right" className="w-[17rem] p-0">
-                <SheetHeader className="border-b border-gold-line px-5 py-4 text-left">
+              <SheetContent side="right" className="flex h-full w-[17rem] flex-col p-0">
+                <SheetHeader className="shrink-0 border-b border-gold-line px-5 py-4 text-left">
                   <SheetTitle className="font-display text-lg">Menu</SheetTitle>
                   <SheetDescription className="text-xs">
                     Inventaris Lavin Kost Purwokerto
                   </SheetDescription>
                 </SheetHeader>
-                <nav className="flex flex-col px-2 py-3">
+                <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-2 py-3">
                   {nav.map((item) => (
                     <Link
                       key={item.to}
@@ -230,6 +247,33 @@ export function AppShell({
                     </Link>
                   ))}
                   <Collapsible defaultOpen={false} className="mt-2">
+                    <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent [&[data-state=open]>svg:last-child]:rotate-180">
+                      <Boxes className="h-4 w-4 shrink-0" />
+                      <span className="flex-1 text-left">Barang Inventaris</span>
+                      <ChevronDown className="h-4 w-4 shrink-0 transition-transform" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="pl-4">
+                      <Link
+                        to="/kamar"
+                        search={{ lantai: 1 }}
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
+                      >
+                        <DoorClosed className="h-4 w-4 shrink-0" />
+                        <span className="truncate">Inventaris Kamar</span>
+                      </Link>
+                      <Link
+                        to="/fasilitas"
+                        search={{ q: undefined }}
+                        onClick={() => setOpen(false)}
+                        className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
+                      >
+                        <Wrench className="h-4 w-4 shrink-0" />
+                        <span className="truncate">Inventaris Fasilitas Utama</span>
+                      </Link>
+                    </CollapsibleContent>
+                  </Collapsible>
+                  <Collapsible defaultOpen={false} className="mt-1">
                     <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent [&[data-state=open]>svg:last-child]:rotate-180">
                       <Calculator className="h-4 w-4 shrink-0" />
                       <span className="flex-1 text-left">Akuntansi</span>
@@ -272,7 +316,7 @@ export function AppShell({
                     </CollapsibleContent>
                   </Collapsible>
                 </nav>
-                <div className="mt-2 border-t border-gold-line px-5 py-4">
+                <div className="shrink-0 border-t border-gold-line px-5 py-4">
                   <TextSizeControl />
                 </div>
               </SheetContent>
