@@ -53,10 +53,6 @@ const nav = [
   { to: "/laporan", label: "Laporan", icon: FileBarChart },
 ] as const;
 
-const inventory = [
-  { to: "/kamar", label: "Inventaris Kamar", icon: DoorClosed },
-  { to: "/fasilitas", label: "Inventaris Fasilitas Utama", icon: Wrench },
-] as const;
 
 const accounting = [
   { to: "/pendapatan", label: "Pendapatan", icon: Coins },
