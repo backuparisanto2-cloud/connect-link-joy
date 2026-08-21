@@ -258,6 +258,7 @@ export function AppShell({
                         <Link
                           key={item.to}
                           to={item.to}
+                          search={{}}
                           onClick={() => setOpen(false)}
                           className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
                         >
