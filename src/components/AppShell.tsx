@@ -3,6 +3,7 @@ import {
   BookOpen,
   LayoutDashboard,
   DoorClosed,
+  Boxes,
   Wrench,
   FileBarChart,
   Wallet,
@@ -309,7 +310,7 @@ export function AppShell({
                     </CollapsibleContent>
                   </Collapsible>
                 </nav>
-                <div className="mt-2 border-t border-gold-line px-5 py-4">
+                <div className="shrink-0 border-t border-gold-line px-5 py-4">
                   <TextSizeControl />
                 </div>
               </SheetContent>
