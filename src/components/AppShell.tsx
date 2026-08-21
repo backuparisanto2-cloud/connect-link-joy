@@ -248,6 +248,26 @@ export function AppShell({
                   ))}
                   <Collapsible defaultOpen={false} className="mt-2">
                     <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent [&[data-state=open]>svg:last-child]:rotate-180">
+                      <Boxes className="h-4 w-4 shrink-0" />
+                      <span className="flex-1 text-left">Barang Inventaris</span>
+                      <ChevronDown className="h-4 w-4 shrink-0 transition-transform" />
+                    </CollapsibleTrigger>
+                    <CollapsibleContent className="pl-4">
+                      {inventory.map((item) => (
+                        <Link
+                          key={item.to}
+                          to={item.to}
+                          onClick={() => setOpen(false)}
+                          className="flex items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent data-[status=active]:bg-accent data-[status=active]:text-accent-foreground"
+                        >
+                          <item.icon className="h-4 w-4 shrink-0" />
+                          <span className="truncate">{item.label}</span>
+                        </Link>
+                      ))}
+                    </CollapsibleContent>
+                  </Collapsible>
+                  <Collapsible defaultOpen={false} className="mt-1">
+                    <CollapsibleTrigger className="flex w-full items-center gap-3 rounded-md px-3 py-3 text-sm text-muted-foreground transition-colors hover:bg-accent [&[data-state=open]>svg:last-child]:rotate-180">
                       <Calculator className="h-4 w-4 shrink-0" />
                       <span className="flex-1 text-left">Akuntansi</span>
                       <ChevronDown className="h-4 w-4 shrink-0 transition-transform" />
