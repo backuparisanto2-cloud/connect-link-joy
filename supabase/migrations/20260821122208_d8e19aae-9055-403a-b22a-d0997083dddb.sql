@@ -1,0 +1,2 @@
+CREATE UNIQUE INDEX IF NOT EXISTS room_items_code_key ON public.room_items (code) WHERE code IS NOT NULL;
+CREATE UNIQUE INDEX IF NOT EXISTS shared_items_code_key ON public.shared_items (code) WHERE code IS NOT NULL;
