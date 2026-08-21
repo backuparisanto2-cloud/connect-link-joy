@@ -5,6 +5,7 @@ import { AlertTriangle, FileDown, History, Pencil, Search, Trash2, UserPlus } fr
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/AppShell";
+import { SignedImage } from "@/components/SignedImage";
 import { TenantDetailDialog } from "@/components/TenantDetailDialog";
 import { TenantFullFormDialog } from "@/components/TenantFullFormDialog";
 import { TenantPaymentDialog } from "@/components/TenantPaymentDialog";
@@ -285,11 +286,20 @@ function TenantPage() {
                   onClick={() => setDetailId(tenant.id)}
                 >
                   <div className="flex items-start justify-between gap-2">
-                    <div>
-                      <p className="font-semibold">{tenant.name}</p>
-                      <p className="text-xs text-muted-foreground">
-                        Kamar {tenant.room_number ?? "—"}
-                      </p>
+                    <div className="flex items-center gap-3">
+                      {tenant.photo_path ? (
+                        <SignedImage
+                          path={tenant.photo_path}
+                          alt={`Foto ${tenant.name}`}
+                          className="h-10 w-10 rounded-full border border-gold-line object-cover"
+                        />
+                      ) : null}
+                      <div>
+                        <p className="font-semibold">{tenant.name}</p>
+                        <p className="text-xs text-muted-foreground">
+                          Kamar {tenant.room_number ?? "—"}
+                        </p>
+                      </div>
                     </div>
                     <Badge variant={tenant.status === "Aktif" ? "default" : "secondary"}>
                       {tenant.status}
