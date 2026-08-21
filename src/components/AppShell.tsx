@@ -233,7 +233,7 @@ export function AppShell({
                     Inventaris Lavin Kost Purwokerto
                   </SheetDescription>
                 </SheetHeader>
-                <nav className="flex flex-col px-2 py-3">
+                <nav className="flex min-h-0 flex-1 flex-col overflow-y-auto overscroll-contain px-2 py-3">
                   {nav.map((item) => (
                     <Link
                       key={item.to}
