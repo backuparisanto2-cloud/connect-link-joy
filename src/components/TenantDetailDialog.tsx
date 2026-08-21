@@ -55,6 +55,39 @@ function MapsLink({ label, url }: { label: string; url: string | null }) {
   );
 }
 
+function FileGroup({ label, paths }: { label: string; paths: string[] }) {
+  return (
+    <div className="space-y-1">
+      <p className="text-xs text-muted-foreground">{label}</p>
+      {paths.length === 0 ? (
+        <p className="text-sm text-muted-foreground">Belum ada berkas.</p>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {paths.map((path) =>
+            path.toLowerCase().endsWith(".pdf") ? (
+              <a
+                key={path}
+                href="#"
+                onClick={(e) => e.preventDefault()}
+                className="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs"
+              >
+                <FileText className="h-3 w-3" /> PDF
+              </a>
+            ) : (
+              <SignedImage
+                key={path}
+                path={path}
+                alt={label}
+                className="h-20 w-20 rounded object-cover"
+              />
+            ),
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export function TenantDetailDialog({
   tenant,
   onOpenChange,
@@ -86,6 +119,13 @@ export function TenantDetailDialog({
         </DialogHeader>
 
         <div className="space-y-4">
+          {tenant.photo_path ? (
+            <SignedImage
+              path={tenant.photo_path}
+              alt={`Foto ${tenant.name}`}
+              className="h-24 w-24 rounded-lg border border-gold-line object-cover"
+            />
+          ) : null}
           <Block title="A. Data Pribadi">
             <Row label="NIK" value={tenant.nik} />
             <Row label="Kartu pelajar" value={tenant.student_card} />
@@ -226,29 +266,9 @@ export function TenantDetailDialog({
           </section>
 
           <Block title="Dokumen">
-            {tenant.documents.length === 0 ? (
-              <p className="text-sm text-muted-foreground">Belum ada dokumen.</p>
-            ) : (
-              <div className="flex flex-wrap gap-2">
-                {tenant.documents.map((path) =>
-                  path.toLowerCase().endsWith(".pdf") ? (
-                    <span
-                      key={path}
-                      className="inline-flex items-center gap-1 rounded-md border px-2 py-1 text-xs"
-                    >
-                      <FileText className="h-3 w-3" /> PDF
-                    </span>
-                  ) : (
-                    <SignedImage
-                      key={path}
-                      path={path}
-                      alt="Dokumen tenant"
-                      className="h-20 w-20 rounded object-cover"
-                    />
-                  ),
-                )}
-              </div>
-            )}
+            <FileGroup label="KTP" paths={tenant.ktp_files} />
+            <FileGroup label="Kartu Mahasiswa / Pelajar / SIM" paths={tenant.id_card_files} />
+            <FileGroup label="Dokumen lain" paths={tenant.documents} />
           </Block>
 
           <section className="space-y-2">
